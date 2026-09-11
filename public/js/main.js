@@ -158,41 +158,4 @@ document.addEventListener('DOMContentLoaded', () => {
             if (secondsEl) secondsEl.innerText = String(seconds).padStart(2, '0');
         }, 1000);
     }
-
-    // Playup Video Interaction
-    const playupVideo = document.getElementById('playup-video');
-    const playupOverlay = document.getElementById('playup-video-overlay');
-    const playupPlayBtn = document.getElementById('playup-play-btn');
-    const playupWrapper = document.getElementById('playup-video-wrapper');
-
-    if (playupVideo && playupPlayBtn) {
-        const resetPlayupVideo = () => {
-            if (!playupVideo.paused && !playupVideo.ended) return;
-
-            playupVideo.controls = false;
-            playupVideo.muted = true;
-            playupVideo.loop = true;
-            playupVideo.play().catch(() => { });
-
-            if (playupOverlay) playupOverlay.classList.remove('opacity-0', 'pointer-events-none');
-            playupVideo.classList.add('opacity-90', 'group-hover:scale-105');
-            playupVideo.classList.remove('opacity-100');
-        };
-
-        playupPlayBtn.addEventListener('click', () => {
-            playupVideo.muted = false;
-            playupVideo.loop = false;
-            playupVideo.currentTime = 0;
-            playupVideo.controls = true;
-            playupVideo.classList.remove('opacity-90', 'group-hover:scale-105');
-            playupVideo.classList.add('opacity-100');
-
-            if (playupOverlay) playupOverlay.classList.add('opacity-0', 'pointer-events-none');
-
-            playupVideo.play();
-        });
-
-        playupVideo.addEventListener('ended', resetPlayupVideo);
-        playupVideo.addEventListener('pause', resetPlayupVideo);
-    }
 });
