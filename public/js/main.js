@@ -75,61 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Video Interaction Logic
-    const videoContainer = document.getElementById('video-container-wrapper');
-    const video = document.getElementById('hero-video');
-    const overlay = document.getElementById('video-overlay');
-    const playBtn = document.getElementById('hero-play-btn');
-
-    if (playBtn && video) {
-        playBtn.addEventListener('click', () => {
-            // Activate Video
-            video.muted = false;
-            video.loop = false;
-            video.currentTime = 0;
-            video.controls = true;
-            video.classList.remove('opacity-90', 'group-hover:scale-105', 'transition-transform');
-            video.classList.add('opacity-100');
-
-            // Flatten Container
-            if (videoContainer) {
-                videoContainer.classList.remove('rotate-2', 'hover:rotate-0', 'group');
-                videoContainer.classList.add('rotate-0', 'scale-100');
-            }
-
-            // Hide Overlay
-            overlay.classList.add('opacity-0', 'pointer-events-none');
-            playBtn.classList.add('pointer-events-none'); // Disable button interaction
-
-            // Play
-            video.play();
-        });
-
-        // Reset on End or Pause
-        const resetVideoState = () => {
-            if (!video.paused && !video.ended) return;
-
-            video.controls = false;
-            video.muted = true;
-            video.loop = true;
-            video.play().catch(() => { });
-
-            video.classList.add('opacity-90', 'group-hover:scale-105', 'transition-transform');
-            video.classList.remove('opacity-100');
-
-            if (videoContainer) {
-                videoContainer.classList.add('rotate-2', 'group');
-                videoContainer.classList.remove('rotate-0', 'scale-100');
-            }
-
-            overlay.classList.remove('opacity-0', 'pointer-events-none');
-            if (playBtn) playBtn.classList.remove('pointer-events-none'); // Re-enable button
-        };
-
-        video.addEventListener('ended', resetVideoState);
-        video.addEventListener('pause', resetVideoState);
-    }
-
     // Countdown Logic
     const daysEl = document.getElementById('days');
     if (daysEl) { // Only run if countdown elements exist
@@ -157,42 +102,5 @@ document.addEventListener('DOMContentLoaded', () => {
             if (minutesEl) minutesEl.innerText = String(minutes).padStart(2, '0');
             if (secondsEl) secondsEl.innerText = String(seconds).padStart(2, '0');
         }, 1000);
-    }
-
-    // Playup Video Interaction
-    const playupVideo = document.getElementById('playup-video');
-    const playupOverlay = document.getElementById('playup-video-overlay');
-    const playupPlayBtn = document.getElementById('playup-play-btn');
-    const playupWrapper = document.getElementById('playup-video-wrapper');
-
-    if (playupVideo && playupPlayBtn) {
-        const resetPlayupVideo = () => {
-            if (!playupVideo.paused && !playupVideo.ended) return;
-
-            playupVideo.controls = false;
-            playupVideo.muted = true;
-            playupVideo.loop = true;
-            playupVideo.play().catch(() => { });
-
-            if (playupOverlay) playupOverlay.classList.remove('opacity-0', 'pointer-events-none');
-            playupVideo.classList.add('opacity-90', 'group-hover:scale-105');
-            playupVideo.classList.remove('opacity-100');
-        };
-
-        playupPlayBtn.addEventListener('click', () => {
-            playupVideo.muted = false;
-            playupVideo.loop = false;
-            playupVideo.currentTime = 0;
-            playupVideo.controls = true;
-            playupVideo.classList.remove('opacity-90', 'group-hover:scale-105');
-            playupVideo.classList.add('opacity-100');
-
-            if (playupOverlay) playupOverlay.classList.add('opacity-0', 'pointer-events-none');
-
-            playupVideo.play();
-        });
-
-        playupVideo.addEventListener('ended', resetPlayupVideo);
-        playupVideo.addEventListener('pause', resetPlayupVideo);
     }
 });
